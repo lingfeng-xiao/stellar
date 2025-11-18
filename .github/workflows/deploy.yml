@@ -40,12 +40,21 @@ jobs:
       # 这里你可以根据实际情况修改路径
       - name: Restart App
         run: |
-          JAR=$(ls target/*.jar | head -n 1)
+          # 查找 stellar-facade 模块下最新的 JAR
+          JAR=$(ls -t stellar-facade/target/*.jar | grep -v original | head -n 1)
+
+          if [ -z "$JAR" ]; then
+            echo "❌ No JAR found in stellar-facade/target"
+            exit 1
+          fi
+
           echo "Using JAR: $JAR"
 
-          # 停止旧进程
-          pkill -f "$JAR" || true
+          # 停掉旧进程（只杀与 stellar-facade 相关的）
+          pkill -f "stellar-facade" || true
 
-          # 运行新版本
+          # 启动新版本
           nohup java -jar "$JAR" --spring.profiles.active=prod >/opt/myapp/app.log 2>&1 &
-          echo "Application restarted!"
+
+          echo "🚀 Application restarted!"
+      
