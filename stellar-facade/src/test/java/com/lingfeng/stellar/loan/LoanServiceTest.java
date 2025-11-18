@@ -12,11 +12,9 @@ import java.util.List;
 public class LoanServiceTest extends StellarServiceTest {
 
     @Autowired
-    private LoanServiceTest loanService;
+    private LoanService loanService;
 
     @Test
     public void crudTest() {
-        List<LoanPO> loanPOS = loanService.queryAll();
-        log.info(loanPOS.toString());
     }
 }
