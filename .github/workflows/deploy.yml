@@ -54,7 +54,7 @@ jobs:
           pkill -f "stellar-facade" || true
 
           # 启动新版本
-          nohup java -jar "$JAR" --spring.profiles.active=prod >/opt/myapp/app.log 2>&1 &
+          nohup java -jar "$JAR" --spring.profiles.active=prod >/home/lingfeng/app.log 2>&1 &
 
           echo "🚀 Application restarted!"
       
